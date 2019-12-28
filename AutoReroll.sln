@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29609.76
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BestModifierRoll", "BestModifierRoll.csproj", "{EF4021D8-F9C4-47C9-8810-043D41C3CD49}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EF4021D8-F9C4-47C9-8810-043D41C3CD49}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF4021D8-F9C4-47C9-8810-043D41C3CD49}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF4021D8-F9C4-47C9-8810-043D41C3CD49}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF4021D8-F9C4-47C9-8810-043D41C3CD49}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F133BE63-7A9F-4FBA-8B8F-03BE80C3152B}
+	EndGlobalSection
+EndGlobal

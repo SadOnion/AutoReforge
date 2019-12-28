@@ -1,0 +1,3 @@
+displayName = AutoReroll
+author = Sad Onion
+version = 1.0
