@@ -1,5 +1,6 @@
 ﻿
 
+using BestModifierRoll;
 using Microsoft.Xna.Framework;
 using System;
 using System.Timers;
@@ -17,7 +18,7 @@ namespace AutoReroll
 		Timer stopTime;
 		double counter;
 		bool reforging;
-		public UIImage but;
+		public UIHoverImage but;
 		UIPanel panel;
 		bool imageHover;
 		public override void OnInitialize()
@@ -31,7 +32,7 @@ namespace AutoReroll
 			panel.BackgroundColor = Color.Transparent;
 			panel.BorderColor = Color.Transparent;
 			 Append(panel); // 4
-			 but = new UIImage(ModContent.GetTexture(AutoReroll.modName+"/Images/sprite_0"));
+			 but = new UIHoverImage(ModContent.GetTexture(AutoReroll.modName+"/Images/sprite_0"),"Reforge");
 			
 			but.Width.Set(50,0);
 			
@@ -39,9 +40,7 @@ namespace AutoReroll
 			
 			but.OnClick += But_OnClick;
 			panel.Append(but);
-			
-			
-			
+
 		}
 		
 		private void But_OnClick(UIMouseEvent evt, UIElement listeningElement)
@@ -63,6 +62,7 @@ namespace AutoReroll
 				but.SetImage(ModContent.GetTexture(AutoReroll.modName+"/Images/sprite_1"));
 				imageHover=true;
 				Main.PlaySound(SoundID.MenuTick);
+				but.SetHoverText(MakeTextHover(Main.reforgeItem));
 			}
 			if(!but.IsMouseHovering && imageHover==true)
 			{
@@ -70,11 +70,67 @@ namespace AutoReroll
 				imageHover=false;
 			}
 		}
+
+		private string MakeTextHover(Item reforgeItem)
+		{
+			string returnText = "Reforge until ";
+			if (reforgeItem.melee)
+			{
+				if(reforgeItem.pick > 0 || reforgeItem.axe > 0 || reforgeItem.hammer > 0)
+				{
+					//Light
+					returnText+="Light";
+				}
+				else
+				{
+					//Godly Legendary
+					returnText+="Godly or Legendary";
+				}
+			}else if (reforgeItem.ranged)
+			{
+				if(reforgeItem.knockBack > 0)
+				{
+					returnText+="Unreal";
+				}
+				else
+				{
+					//Demonic 
+					returnText+="Demonic";
+				}
+			}else if(reforgeItem.magic)
+			{
+				if(reforgeItem.knockBack > 0)
+				{
+					returnText+="Mythical";
+				}
+				else
+				{
+					//Demonic 
+					returnText+="Demonic";
+				}
+			}else if (reforgeItem.summon)
+			{
+				//Ruthless
+				returnText+="Ruthless";
+			}else{
+				if (reforgeItem.accessory)
+				{
+					returnText+="Warding,Menacing or Lucky";
+				}
+				else
+				{
+					returnText+="Godly";
+				}
+				
+			}
+			return returnText;
+		}
+
 		private void Check(GameTime time)
 		{
 			
 				counter+=time.ElapsedGameTime.TotalMilliseconds;
-				if (counter > 150)
+				if (counter > 100)
 				{
 					Reforge();
 					counter=0;
@@ -124,14 +180,21 @@ namespace AutoReroll
 				//Ruthless
 				if(reforgeItem.prefix == 57)reforging=false;
 			}else{
-				//Wardign
-				if(reforgeItem.prefix == 65)reforging=false;
-				//Menacing
-				if(reforgeItem.prefix == 72)reforging=false;
-				//Lucky
-				if(reforgeItem.prefix == 68)reforging=false;
-				//Godly
-				if(reforgeItem.prefix == 59)reforging=false;
+				if (reforgeItem.accessory)
+				{
+					//Wardign
+					if(reforgeItem.prefix == 65)reforging=false;
+					//Menacing
+					if(reforgeItem.prefix == 72)reforging=false;
+					//Lucky
+					if(reforgeItem.prefix == 68)reforging=false;
+				}
+				else
+				{
+					//Godly
+					if(reforgeItem.prefix == 59)reforging=false;
+				}
+				
 			}
 			
 		}
