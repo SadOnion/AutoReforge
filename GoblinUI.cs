@@ -8,6 +8,7 @@ using Terraria.GameContent.UI.Elements;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.UI;
+using Terraria.UI.Chat;
 
 namespace AutoReroll
 {
@@ -61,6 +62,7 @@ namespace AutoReroll
 			{
 				but.SetImage(ModContent.GetTexture(AutoReroll.modName+"/Images/sprite_1"));
 				imageHover=true;
+				Main.PlaySound(SoundID.MenuTick);
 			}
 			if(!but.IsMouseHovering && imageHover==true)
 			{
