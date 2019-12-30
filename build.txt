@@ -1,4 +1,4 @@
 displayName = AutoReroll
 author = Sad Onion
-version = 1.1.0
+version = 1.1.1
 homepage = https://forums.terraria.org/index.php?threads/autoreroll.85057/
