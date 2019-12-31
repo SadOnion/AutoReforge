@@ -2,20 +2,17 @@
 
 using BestModifierRoll;
 using Microsoft.Xna.Framework;
-using System;
-using System.Timers;
 using Terraria;
 using Terraria.GameContent.UI.Elements;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.UI;
 using Terraria.UI.Chat;
+using Terraria.Utilities;
 
 namespace AutoReroll
 {
     public class GoblinUI : UIState{
-		Timer timer;
-		Timer stopTime;
 		double counter;
 		bool reforging;
 		public UIHoverImage but;
@@ -63,6 +60,7 @@ namespace AutoReroll
 				imageHover=true;
 				Main.PlaySound(SoundID.MenuTick);
 				but.SetHoverText(MakeTextHover(Main.reforgeItem));
+			
 			}
 			if(!but.IsMouseHovering && imageHover==true)
 			{
@@ -71,66 +69,28 @@ namespace AutoReroll
 			}
 		}
 
-		private string MakeTextHover(Item reforgeItem)
-		{
-			string returnText = "Reforge until ";
-			if (reforgeItem.melee)
+		private string MakeTextHover(Item reforgeItem){
+			
+			Prefix pref = BestPrefix(reforgeItem);
+			if(pref == Prefix.None) 
 			{
-				if(reforgeItem.pick > 0 || reforgeItem.axe > 0 || reforgeItem.hammer > 0)
-				{
-					//Light
-					returnText+="Light";
-				}
-				else
-				{
-					//Godly Legendary
-					returnText+="Godly or Legendary";
-				}
-			}else if (reforgeItem.ranged)
-			{
-				if(reforgeItem.knockBack > 0)
-				{
-					returnText+="Unreal";
-				}
-				else
-				{
-					//Demonic 
-					returnText+="Demonic";
-				}
-			}else if(reforgeItem.magic)
-			{
-				if(reforgeItem.knockBack > 0)
-				{
-					returnText+="Mythical";
-				}
-				else
-				{
-					//Demonic 
-					returnText+="Demonic";
-				}
-			}else if (reforgeItem.summon)
-			{
-				//Ruthless
-				returnText+="Ruthless";
-			}else{
-				if (reforgeItem.accessory)
-				{
-					returnText+="Warding,Menacing or Lucky";
-				}
-				else
-				{
-					returnText+="Godly";
-				}
-				
+				return "Can't identify best modifier sorry ;(";
 			}
-			return returnText;
+			if (pref == Prefix.Accessory)
+			{
+				 return "Reforge until Menacing,Warding or Lucky";
+			}
+
+			return "Reforge until "+pref.ToString();
+
 		}
+		
 
 		private void Check(GameTime time)
 		{
 			
 				counter+=time.ElapsedGameTime.TotalMilliseconds;
-				if (counter > 100)
+				if (counter > 1000/AutoReroll.ForgePerSec)
 				{
 					Reforge();
 					counter=0;
@@ -141,62 +101,13 @@ namespace AutoReroll
 
 		private void CheckForDesirePrefix(Item reforgeItem)
 		{
-			if (reforgeItem.melee)
+			Prefix pref = BestPrefix(reforgeItem);
+			if(pref == Prefix.None) reforging=false;
+			else if (pref == Prefix.Accessory)
 			{
-				if(reforgeItem.pick > 0 || reforgeItem.axe > 0 || reforgeItem.hammer > 0)
-				{
-					//Light
-					if(reforgeItem.prefix == 15)reforging=false;
-				}
-				else
-				{
-					//Godly Legendary
-					if(reforgeItem.prefix == 59 || reforgeItem.prefix == 81)reforging=false;
-				}
-			}else if (reforgeItem.ranged)
-			{
-				if(reforgeItem.knockBack > 0)
-				{
-					if(reforgeItem.prefix == 82)reforging=false;
-				}
-				else
-				{
-					//Demonic 
-					if(reforgeItem.prefix == 60)reforging=false;
-				}
-			}else if(reforgeItem.magic)
-			{
-				if(reforgeItem.knockBack > 0)
-				{
-					if(reforgeItem.prefix == 83)reforging=false;
-				}
-				else
-				{
-					//Demonic 
-					if(reforgeItem.prefix == 60)reforging=false;
-				}
-			}else if (reforgeItem.summon)
-			{
-				//Ruthless
-				if(reforgeItem.prefix == 57)reforging=false;
-			}else{
-				if (reforgeItem.accessory)
-				{
-					//Wardign
-					if(reforgeItem.prefix == 65)reforging=false;
-					//Menacing
-					if(reforgeItem.prefix == 72)reforging=false;
-					//Lucky
-					if(reforgeItem.prefix == 68)reforging=false;
-				}
-				else
-				{
-					//Godly
-					if(reforgeItem.prefix == 59)reforging=false;
-				}
-				
+				if(reforgeItem.prefix == 65||reforgeItem.prefix == 68||reforgeItem.prefix == 72) reforging=false;
 			}
-			
+			else if(reforgeItem.prefix == (int)pref) reforging=false;
 		}
 
 		private void Reforge()
@@ -242,5 +153,133 @@ namespace AutoReroll
 				Main.PlaySound(SoundID.Item37, -1, -1);
 			}
 		}
+		public enum Prefix
+		{
+			None,
+			Legendary = 81,
+			Godly = 59,
+			Mythical = 83,
+			Unreal = 82,
+			Light=15,
+			Demonic=60,
+			Ruthless=57,
+			Accessory,
+			Fabled = 95
+		}
+		
+        private Prefix BestPrefix(Item item)
+        {
+            UnifiedRandom unifiedRandom = WorldGen.gen ? WorldGen.genRand : Main.rand;
+            int num = 0;
+            int modPrefix = ItemLoader.ChoosePrefix(item, unifiedRandom);
+            if (modPrefix >= 0)
+            {
+                num = modPrefix;//-1?
+            }
+            else if (PrefixUtils.MeleePrefix(item))
+            {
+				if(item.axe > 0 || item.pick>0 || item.hammer > 0)
+				{
+					
+						return Prefix.Light;
+				}
+				
+                return Prefix.Legendary; 
+            }
+            else if (PrefixUtils.WeaponPrefix(item))
+            {
+                return Prefix.Godly;
+            }
+            else if (PrefixUtils.RangedPrefix(item))
+            {
+				if(item.knockBack > 0)
+				{
+
+				 return Prefix.Unreal;
+				}
+				else
+				{
+					return Prefix.Demonic;
+				}
+            }
+            else if (PrefixUtils.MagicPrefix(item))
+            {
+				if (item.mana > 0)
+				{
+					if(item.damage<5)return Prefix.None;
+					if(item.knockBack > 0)
+					{
+						if (item.rare > 2)
+						{
+							 return Prefix.Mythical;
+						}
+						else
+						{
+							return Prefix.Godly;
+						}
+					
+					}
+					else
+					{
+						return Prefix.Demonic;
+					}
+				}
+				else
+				{
+					return Prefix.Godly;
+				}
+            }else if (PrefixUtils.SummonPrefix(item))
+			{
+				return Prefix.Ruthless;
+			}
+            else
+            {
+                if (!PrefixUtils.WeaponPrefix(item))
+                {
+                    if (!item.vanity)
+                    {
+                        return Prefix.Accessory;
+                    }
+                    return Prefix.None;
+                }
+                return Prefix.Godly;
+            }
+
+			if(item.modItem.mod != null)
+			{
+				Mod thisItemMod = item.modItem.mod;
+				if(thisItemMod == AutoReroll.Thorium)
+				{
+					if (item.thrown)
+					{
+						if (item.knockBack > 0)
+						{
+
+						return Prefix.Unreal;
+						}
+						else
+						{
+							return Prefix.Demonic;
+						}
+					}
+					else
+					{
+						return Prefix.Fabled;
+					}
+				}
+				if(thisItemMod == AutoReroll.Calamity)
+				{
+					if(item.knockBack > 0) return Prefix.Unreal;
+					else return Prefix.Demonic;
+				}
+			}
+			else
+			{
+				return Prefix.None;
+			}
+			return Prefix.None;
+        }
+
+		
 	}
 }

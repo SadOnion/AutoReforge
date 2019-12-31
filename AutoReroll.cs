@@ -17,6 +17,9 @@ namespace AutoReroll
 		internal UserInterface userInterface;
 		private GameTime lastUpdateUiGameTime;
 		internal GoblinUI myUi;
+		public static Mod Thorium {get;private set;}
+		public static Mod Calamity {get;private set;}
+		public static int ForgePerSec=10;
 		public AutoReroll()
 		{
 		}
@@ -29,7 +32,9 @@ namespace AutoReroll
     
 				myUi = new GoblinUI();
 				myUi.Activate(); // Activate calls Initialize() on the UIState if not initialized, then calls OnActivate and then calls Activate on every child element
-}
+				Thorium = ModLoader.GetMod("ThoriumMod");
+				Calamity = ModLoader.GetMod("CalamityMod");
+			}
 		}
 		public override void UpdateUI(GameTime gameTime)
 		{

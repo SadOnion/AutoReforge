@@ -1,10 +1,4 @@
-Auto Reroll is a simple mod that adds an additional option on the goblin tinkerer to reroll automaticly as long as you have enough gold you don't need to spam reforge button any more.
+Auto Reroll is a simple mod that adds an additional option on the goblin tinkerer to reroll automaticly as long as you have enough gold, you don't need to spam reforge button any more.
 
-Here it's how it works:
+More info on homepage
 
-Melee Weapon -> Godly or Legendary
-Range Weapon -> Unreal or Demonic
-Magic Weapon -> Mythical or Demonic
-Summoner Weapon -> Ruthless
-Tools -> Light
-Accesories -> Warding, Menacing or Lucky
