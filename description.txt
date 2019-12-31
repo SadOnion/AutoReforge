@@ -1,4 +1,4 @@
 Auto Reroll is a simple mod that adds an additional option on the goblin tinkerer to reroll automaticly as long as you have enough gold, you don't need to spam reforge button any more.
 
-More info on homepage
+Specific info on homepage
 
