@@ -183,8 +183,14 @@ namespace AutoReroll
 					
 						return Prefix.Light;
 				}
-				
-                return Prefix.Legendary; 
+				if (item.useStyle == 1 || item.useStyle == 3)
+				{
+					return Prefix.Legendary;
+				}
+				else
+				{
+					return Prefix.Godly;
+				}
             }
             else if (PrefixUtils.WeaponPrefix(item))
             {
