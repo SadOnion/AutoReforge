@@ -80,7 +80,6 @@ namespace AutoReroll
 			{
 				 return "Reforge until Menacing,Warding or Lucky";
 			}
-
 			return "Reforge until "+pref.ToString();
 
 		}
@@ -164,7 +163,8 @@ namespace AutoReroll
 			Demonic=60,
 			Ruthless=57,
 			Accessory,
-			Fabled = 95
+			Fabled = 95,
+			Masterful = 28
 		}
 		
         private Prefix BestPrefix(Item item)
@@ -180,8 +180,15 @@ namespace AutoReroll
             {
 				if(item.axe > 0 || item.pick>0 || item.hammer > 0)
 				{
-					
+					if (item.knockBack > 0)
+					{
+
 						return Prefix.Light;
+					}
+					else
+					{
+						return Prefix.None;
+					}
 				}
 				if (item.useStyle == 1 || item.useStyle == 3)
 				{
@@ -194,14 +201,29 @@ namespace AutoReroll
             }
             else if (PrefixUtils.WeaponPrefix(item))
             {
-                return Prefix.Godly;
+				if (item.knockBack > 0)
+				{
+					return Prefix.Godly;
+
+				}
+				else
+				{
+					return Prefix.None;
+				}
             }
             else if (PrefixUtils.RangedPrefix(item))
             {
 				if(item.knockBack > 0)
 				{
+					if (item.useAnimation > 2)
+					{
 
-				 return Prefix.Unreal;
+						return Prefix.Unreal;
+					}
+					else
+					{
+						return Prefix.Godly;
+					}
 				}
 				else
 				{
@@ -215,9 +237,14 @@ namespace AutoReroll
 					if(item.damage<5)return Prefix.None;
 					if(item.knockBack > 0)
 					{
-						if (item.rare > 2)
+						if (item.rare>2)
 						{
+							if (item.useAnimation > 6)
+							{
+
 							 return Prefix.Mythical;
+							}
+							else return Prefix.Masterful;
 						}
 						else
 						{
@@ -236,7 +263,15 @@ namespace AutoReroll
 				}
             }else if (PrefixUtils.SummonPrefix(item))
 			{
+				if (item.knockBack > 0)
+				{
+
 				return Prefix.Ruthless;
+				}
+				else
+				{
+					return Prefix.Demonic;
+				}
 			}
             else
             {
