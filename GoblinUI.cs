@@ -213,9 +213,11 @@ namespace AutoReroll
             }
             else if (PrefixUtils.RangedPrefix(item))
             {
+				Item defItem = item.Clone();
+				defItem.SetDefaults(item.type,false);
 				if(item.knockBack > 0)
 				{
-					if (item.useAnimation > 2)
+					if (defItem.useAnimation > 2)
 					{
 
 						return Prefix.Unreal;
@@ -232,14 +234,16 @@ namespace AutoReroll
             }
             else if (PrefixUtils.MagicPrefix(item))
             {
+				Item defItem = item.Clone();
+				defItem.SetDefaults(item.type,false);
 				if (item.mana > 0)
 				{
-					if(item.damage<5)return Prefix.None;
+					if(defItem.damage<=5)return Prefix.None;
 					if(item.knockBack > 0)
 					{
-						if (item.rare>2)
+						if (defItem.rare>1)
 						{
-							if (item.useAnimation > 6)
+							if (defItem.useAnimation > 6)
 							{
 
 							 return Prefix.Mythical;
