@@ -243,7 +243,7 @@ namespace AutoReroll
 					{
 						if (defItem.rare>1)
 						{
-							if (defItem.useAnimation > 6)
+							if (defItem.useAnimation > 7 && defItem.useTime>2)
 							{
 
 							 return Prefix.Mythical;
