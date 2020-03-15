@@ -5,7 +5,7 @@ namespace AutoReroll
     class Config : ModConfig
     {
         public override ConfigScope Mode => ConfigScope.ClientSide;
-        [Range(1,20)]
+        [Range(1,100)]
         [Label("AutoReforge Speed")]
         [DefaultValue(10)]
         [Increment(1)]

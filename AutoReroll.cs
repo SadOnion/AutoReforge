@@ -1,4 +1,6 @@
 
+using GadgetBox;
+using GadgetBox.GadgetUI;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -14,53 +16,48 @@ namespace AutoReroll
 	public class AutoReroll : Mod
 	{
 		public const string modName = "AutoReroll";
-		internal UserInterface userInterface;
-		private GameTime lastUpdateUiGameTime;
-		internal GoblinUI myUi;
+		public static AutoReroll Instance;
+		public UserInterface userInterface;
+
 		public static Mod Thorium {get;private set;}
 		public static Mod Calamity {get;private set;}
-		public static int ForgePerSec=10;
-		public AutoReroll()
-		{
-		}
-		bool buttonActive;
+		public  static int ForgePerSec=10;
 		
+		public bool isInReforgeMenu;
+		private int lastSeenScreenWidth;
+		private int lastSeenScreenHeight;
+		private bool lastFocus;
+
 		public override void Load()
 		{
+			Instance = this;
 			if (!Main.dedServ) {
 			userInterface = new UserInterface();
-    
-				myUi = new GoblinUI();
-				myUi.Activate(); // Activate calls Initialize() on the UIState if not initialized, then calls OnActivate and then calls Activate on every child element
 				Thorium = ModLoader.GetMod("ThoriumMod");
 				Calamity = ModLoader.GetMod("CalamityMod");
 			}
 		}
+		public override void PostSetupContent()
+		{
+			ModCompat.Load();
+		}
+		public override void Unload()
+		{
+			ModCompat.Unload();
+			Instance=null;
+			Thorium = null;
+			Calamity=null;
+		}
 		public override void UpdateUI(GameTime gameTime)
 		{
-			lastUpdateUiGameTime = gameTime;
-			
-			if (userInterface?.CurrentState != null) 
+			if (Main.InReforgeMenu && isInReforgeMenu==false)
 			{
-  				userInterface.Update(gameTime);
-				if(!Main.InReforgeMenu){userInterface.SetState(null); buttonActive=false;}
-				else
-				{
-					
-					if(Main.reforgeItem.type == 0 && buttonActive==true)
-						{
-						userInterface.SetState(null);
-						buttonActive = false;
-						}
-				}
+				userInterface.SetState(new ReforgeMachineUI());
+				isInReforgeMenu = true;
 			}
-			else
+			if(userInterface != null)
 			{
-				if(Main.reforgeItem.type != 0 && buttonActive == false)
-					{
-						userInterface.SetState(myUi);
-						buttonActive=true;
-					}
+				userInterface.Update(gameTime);
 			}
 			
 		}
@@ -73,9 +70,18 @@ namespace AutoReroll
     				"BestModifierRoll: MyInterface",
     				delegate
    	 				{		
-    				if ( lastUpdateUiGameTime != null && userInterface?.CurrentState != null) {
-    				userInterface.Draw(Main.spriteBatch, lastUpdateUiGameTime);
-    			}
+    				if (Main.playerInventory && !Main.recBigList)
+						{
+							if (lastSeenScreenWidth != Main.screenWidth || lastSeenScreenHeight != Main.screenHeight || !lastFocus && Main.hasFocus)
+							{	
+								userInterface.Recalculate();
+								lastSeenScreenWidth = Main.screenWidth;
+								lastSeenScreenHeight = Main.screenHeight;
+							}
+							
+							userInterface.Draw(Main.spriteBatch, Main._drawInterfaceGameTime);
+						}
+    			
    				return true;
     	},
    		InterfaceScaleType.UI));
