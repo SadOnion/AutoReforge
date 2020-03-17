@@ -11,18 +11,29 @@ namespace AutoReroll
 {
     class AutoReforgeGoblin : GlobalNPC
     {
-        /*
+        
         public override bool PreChatButtonClicked(NPC npc, bool firstButton)
         {
             if(npc.type == NPCID.GoblinTinkerer && firstButton==false)
             {
-                GadgetBox.GadgetMethods.CloseVanillaUIs(Main.LocalPlayer);
-                Main.playerInventory=true;
-                AutoReroll.Instance.isInReforgeMenu=true;
+               // Main.playerInventory=true;
+                //Main.HidePlayerCraftingMenu=true;
+                AutoReroll.Instance.ReforgeMenu=true;
                 return false;
             }
             return true;
         }
-        */
+        public override void OnChatButtonClicked(NPC npc, bool firstButton)
+        {
+             if(npc.type == NPCID.GoblinTinkerer && firstButton==false)
+            {
+               // Main.playerInventory=true;
+                //Main.HidePlayerCraftingMenu=true;
+                //AutoReroll.Instance.ReforgeMenu=true;
+                
+            }
+            
+        }
+
     }
 }

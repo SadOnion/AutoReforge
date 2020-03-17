@@ -30,11 +30,12 @@ namespace GadgetBox.GadgetUI
 		{
 			Main.recBigList = false;
 			Main.playerInventory = true;
+			Main.HidePlayerCraftingMenu = true;
 			
 			reforgePanel = new UIReforgePanel(() => reforgeSlot.item, () => reforgePrice);
 			reforgePanel.SetPadding(4);
-			reforgePanel.Top.Pixels = Main.instance.invBottom + 80;
-			reforgePanel.Left.Pixels = 50;
+			reforgePanel.Top.Pixels = Main.instance.invBottom + 15;
+			reforgePanel.Left.Pixels = 20;
 			reforgePanel.MinHeight.Pixels = 260;
 
 			reforgeSlot = new UIItemSlot(0.85f);
@@ -101,8 +102,11 @@ namespace GadgetBox.GadgetUI
 			base.Update(gameTime);
 			
 			bool closeUI = false, silent = false;
-			
-			if (!Main.InReforgeMenu)
+			if(Main.LocalPlayer.talkNPC == -1)
+			{
+				AutoReroll.AutoReroll.Instance.ReforgeMenu=false;
+			}
+			if (!AutoReroll.AutoReroll.Instance.ReforgeMenu)
 			{
 				closeUI = true;
 			}
@@ -115,6 +119,7 @@ namespace GadgetBox.GadgetUI
 				}
 				AutoReroll.AutoReroll.Instance.userInterface.SetState(null);
 				AutoReroll.AutoReroll.Instance.isInReforgeMenu=false;
+				AutoReroll.AutoReroll.Instance.ReforgeMenu=false;
 				return;
 			}
 
@@ -166,13 +171,13 @@ namespace GadgetBox.GadgetUI
 
 		protected override void DrawSelf(SpriteBatch spriteBatch)
 		{
+			Main.HidePlayerCraftingMenu = true;
 			if (reforgePanel.ContainsPoint(Main.MouseScreen))
 			{
 				Main.LocalPlayer.mouseInterface = true;
 				Main.HoverItem.TurnToAir();
 				Main.hoverItemName = "";
 			}
-			Main.HidePlayerCraftingMenu = true;
 			reforgeButton.Visible = !reforgeSlot.item.IsAir;
 			moneyPanel.Visible = !reforgeSlot.item.IsAir;
 		}

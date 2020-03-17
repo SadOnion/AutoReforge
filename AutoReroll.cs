@@ -24,6 +24,7 @@ namespace AutoReroll
 		public  static int ForgePerSec=10;
 		
 		public bool isInReforgeMenu;
+		public bool ReforgeMenu;
 		private int lastSeenScreenWidth;
 		private int lastSeenScreenHeight;
 		private bool lastFocus;
@@ -50,7 +51,8 @@ namespace AutoReroll
 		}
 		public override void UpdateUI(GameTime gameTime)
 		{
-			if (Main.InReforgeMenu && isInReforgeMenu==false)
+
+			if (ReforgeMenu && isInReforgeMenu==false)
 			{
 				userInterface.SetState(new ReforgeMachineUI());
 				isInReforgeMenu = true;
