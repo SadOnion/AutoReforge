@@ -19,6 +19,7 @@ namespace GadgetBox.GadgetUI
 		internal UIFancyButton reforgeButton;
 		internal UIPanel reforgeListPanel;
 		internal UIList reforgeList;
+		internal UIMoneyPanel moneyPanel;
 		private List<byte> selectedPrefixes = new List<byte>();
 		private int reforgePrice;
 		private int reforgeTries;
@@ -41,6 +42,14 @@ namespace GadgetBox.GadgetUI
 			reforgeSlot.CanClick += () => Main.mouseItem.type == 0 || Main.mouseItem.Prefix(-3);
 			reforgeSlot.OnMouseDown += (a, b) => { selectedPrefixes.Clear(); OnItemChanged(); };
 			reforgePanel.Append(reforgeSlot);
+
+			moneyPanel = new UIMoneyPanel();
+			moneyPanel.Left.Pixels = 200;
+			moneyPanel.Top.Pixels = 32;
+			moneyPanel.BackgroundColor = Color.Transparent;
+			moneyPanel.BorderColor = Color.Transparent;
+			moneyPanel.Visible = false;
+			reforgePanel.Append(moneyPanel);
 
 			reforgeButton = new UIFancyButton(Main.reforgeTexture[0], Main.reforgeTexture[1]);
 			reforgeButton.Top.Pixels = 20;
@@ -73,6 +82,7 @@ namespace GadgetBox.GadgetUI
 			reforgeListPanel.Append(reforgeListScrollbar);
 			reforgeList.SetScrollbar(reforgeListScrollbar);
 
+
 			Append(reforgePanel);
 		}
 
@@ -96,7 +106,7 @@ namespace GadgetBox.GadgetUI
 			{
 				closeUI = true;
 			}
-			
+
 			if (closeUI)
 			{
 				if (!silent)
@@ -164,6 +174,7 @@ namespace GadgetBox.GadgetUI
 			}
 			Main.HidePlayerCraftingMenu = true;
 			reforgeButton.Visible = !reforgeSlot.item.IsAir;
+			moneyPanel.Visible = !reforgeSlot.item.IsAir;
 		}
 
 		private void OnReforgeButtonClick(UIMouseEvent evt, UIElement listeningElement)
@@ -185,8 +196,8 @@ namespace GadgetBox.GadgetUI
 		}
 
 		private bool CanReforgeItem() => !reforgeSlot.item.IsAir && !selectedPrefixes.Contains(reforgeSlot.item.prefix) &&
-			Main.LocalPlayer.CanBuyItem(reforgePrice, -1) && ItemLoader.PreReforge(reforgeSlot.item);
-
+			Main.LocalPlayer.CanBuyItem(reforgePrice+moneyPanel.GetMoneyValue(), -1) && ItemLoader.PreReforge(reforgeSlot.item);
+		
 		private void OnItemChanged()
 		{
 			

@@ -63,6 +63,7 @@ namespace AutoReroll
 		}
 
 		public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers) {
+			
 			int mouseTextIndex = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Mouse Text"));
 			 if (mouseTextIndex != -1) {
 				
@@ -86,7 +87,8 @@ namespace AutoReroll
     	},
    		InterfaceScaleType.UI));
   }
-}
+	}
+		
 	}
 	
 	
