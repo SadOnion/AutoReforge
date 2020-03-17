@@ -1,4 +1,4 @@
-Auto Reforge is a  mod that adds an additional option on the goblin tinkerer to reroll automaticly as long as you have enough gold, you don't need to spam reforge button any more.
+Auto Reforge is a  mod that replaces normal reforge menu with more complex one that allows you to reforge automaticly.
 
 Specific info on homepage
 
