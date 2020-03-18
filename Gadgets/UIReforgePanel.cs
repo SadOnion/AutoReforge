@@ -35,10 +35,10 @@ namespace GadgetBox.GadgetUI
 			Vector2 priceOffset = new Vector2(style.X + 68, style.Y + 28);
 			if (!_reforgeItem().IsAir)
 			{
-				priceOffset += new Vector2(36+60, -14);
+				priceOffset += new Vector2(46, -20);
 				priceText = Language.GetTextValue("LegacyInterface.46");
 				float xOffset = Main.fontMouseText.MeasureString(priceText).X - 20;
-				ItemSlot.DrawMoney(spriteBatch, "", priceOffset.X + xOffset, priceOffset.Y - 42, Utils.CoinsSplit(Math.Max(_reforgePrice(), 1)), true);
+				ItemSlot.DrawMoney(spriteBatch, "", priceOffset.X + xOffset + 45, priceOffset.Y - 42, Utils.CoinsSplit(Math.Max(_reforgePrice(), 1)), true);
 				ItemSlot.DrawSavings(spriteBatch, priceOffset.X, priceOffset.Y - 14, true);
 			}
 			else

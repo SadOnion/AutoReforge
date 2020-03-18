@@ -34,9 +34,9 @@ namespace GadgetBox.GadgetUI
 			
 			reforgePanel = new UIReforgePanel(() => reforgeSlot.item, () => reforgePrice);
 			reforgePanel.SetPadding(4);
-			reforgePanel.Top.Pixels = Main.instance.invBottom + 15;
+			reforgePanel.Top.Pixels = Main.instance.invBottom + 10;
 			reforgePanel.Left.Pixels = 20;
-			reforgePanel.MinHeight.Pixels = 260;
+			reforgePanel.MinHeight.Pixels = 300;
 
 			reforgeSlot = new UIItemSlot(0.85f);
 			reforgeSlot.Top.Pixels = reforgeSlot.Left.Pixels = 12;
@@ -45,8 +45,8 @@ namespace GadgetBox.GadgetUI
 			reforgePanel.Append(reforgeSlot);
 
 			moneyPanel = new UIMoneyPanel();
-			moneyPanel.Left.Pixels = 200;
-			moneyPanel.Top.Pixels = 32;
+			moneyPanel.Left.Pixels = 170;
+			moneyPanel.Top.Pixels = 45;
 			moneyPanel.BackgroundColor = Color.Transparent;
 			moneyPanel.BorderColor = Color.Transparent;
 			moneyPanel.Visible = false;
@@ -61,7 +61,7 @@ namespace GadgetBox.GadgetUI
 			reforgePanel.Append(reforgeButton);
 
 			reforgeListPanel = new UIPanel();
-			reforgeListPanel.Top.Pixels = 70;
+			reforgeListPanel.Top.Pixels = 80;
 			reforgeListPanel.Left.Pixels = 12;
 			reforgeListPanel.Width.Set(-24, 1);
 			reforgeListPanel.Height.Set(-82, 1);

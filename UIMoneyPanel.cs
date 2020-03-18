@@ -49,15 +49,16 @@ namespace AutoReroll
 			MinHeight.Pixels = 40;
             Width.Pixels = 150;
 			Height.Pixels = 40;
-           
+           int padding=25;
             UICounterButton platinumButton = new UICounterButton(ModContent.GetTexture(AutoReroll.modName+"/Images/Platinum_Coin"));
+            platinumButton.Left.Pixels=25;
             UICounterButton goldButton = new UICounterButton(ModContent.GetTexture(AutoReroll.modName+"/Images/Gold_Coin"));
-            goldButton.Left.Pixels=25;
+            goldButton.Left.Pixels=platinumButton.Left.Pixels+padding;
             UICounterButton silverButton = new UICounterButton(ModContent.GetTexture(AutoReroll.modName+"/Images/Silver_Coin"));
-            silverButton.Left.Pixels=50;
+            silverButton.Left.Pixels=goldButton.Left.Pixels+padding;
             
             UICounterButton copperButton = new UICounterButton(ModContent.GetTexture(AutoReroll.modName+"/Images/Copper_Coin"));
-            copperButton.Left.Pixels=75;
+            copperButton.Left.Pixels=silverButton.Left.Pixels+padding;
             
             CounterButtons[3] = platinumButton;
             CounterButtons[2] = goldButton;
