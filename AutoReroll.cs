@@ -21,6 +21,8 @@ namespace AutoReroll
 
 		public static Mod Thorium {get;private set;}
 		public static Mod Calamity {get;private set;}
+		public static Mod AlchemistNPC {get;private set;}
+		public static Mod AlchemistNPC_Lite {get;private set;}
 		public  static int ForgePerSec=10;
 		
 		public bool isInReforgeMenu;
@@ -36,6 +38,8 @@ namespace AutoReroll
 			userInterface = new UserInterface();
 				Thorium = ModLoader.GetMod("ThoriumMod");
 				Calamity = ModLoader.GetMod("CalamityMod");
+				AlchemistNPC = ModLoader.GetMod("AlchemistNPC");
+				AlchemistNPC_Lite = ModLoader.GetMod("AlchemistNPCLite");
 			}
 		}
 		public override void PostSetupContent()
@@ -48,6 +52,8 @@ namespace AutoReroll
 			Instance=null;
 			Thorium = null;
 			Calamity=null;
+			AlchemistNPC=null;
+			AlchemistNPC_Lite=null;
 		}
 		public override void UpdateUI(GameTime gameTime)
 		{

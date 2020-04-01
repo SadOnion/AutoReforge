@@ -257,7 +257,9 @@ namespace GadgetBox.GadgetUI
 					reforgeLabel.selected = true;
 					tempSelected.Add(i);
 				}
+				
 				PrefixUtils.Prefix pref = PrefixUtils.BestPrefix(tempItem);
+				
 				if(pref == PrefixUtils.Prefix.Accessory)
 				{
 					if(i == 65 || i==72 || i == 68)
