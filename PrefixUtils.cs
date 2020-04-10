@@ -125,7 +125,6 @@ namespace AutoReroll
             UnifiedRandom unifiedRandom = WorldGen.gen ? WorldGen.genRand : Main.rand;
             int num = 0;
             int modPrefix = ItemLoader.ChoosePrefix(item, unifiedRandom);
-			Main.NewText(modPrefix);
             if (modPrefix >= 0)
             {
                 num = modPrefix;//-1?

@@ -1,0 +1,11 @@
+bin/
+obj/
+*.user
+App.config
+.vs/AutoReroll/v15/Server/sqlite3/storage.ide-wal
+.vs/AutoReroll/v15/Server/sqlite3/storage.ide-shm
+.vs/AutoReroll/v15/Server/sqlite3/storage.ide
+.vs/AutoReroll/v15/Server/sqlite3/db.lock
+.vs/AutoReroll/v15/.suo
+.vs/AutoReroll/DesignTimeBuild/.dtbcache
+*.mdp
