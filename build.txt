@@ -1,4 +1,4 @@
 displayName = AutoReforge
 author = Sad Onion
-version = 1.5.6
+version = 1.5.7
 homepage = https://forums.terraria.org/index.php?threads/autoreroll.85057/
