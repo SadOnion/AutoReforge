@@ -16,7 +16,7 @@ namespace AutoReroll
         {
             if(npc.type == NPCID.GoblinTinkerer && firstButton==false)
             {
-              
+                Main.npcChatText = "";
                 AutoReroll.Instance.ReforgeMenu=true;
                 return false;
             }
