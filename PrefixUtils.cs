@@ -1,4 +1,5 @@
-﻿using Terraria;
+﻿using System;
+using Terraria;
 using Terraria.ModLoader;
 using Terraria.Utilities;
 
@@ -116,12 +117,9 @@ namespace AutoReroll
 			Fabled = 95,
 			Masterful = 28
 		}
+		[Obsolete("This method should not be used, it causes a lot of errors")]
 		public static Prefix BestPrefix(Item item)
         {
-			if(AutoReroll.AlchemistNPC != null || AutoReroll.AlchemistNPC_Lite != null)
-			{
-				return Prefix.None;
-			}
             UnifiedRandom unifiedRandom = WorldGen.gen ? WorldGen.genRand : Main.rand;
             int num = 0;
             int modPrefix = ItemLoader.ChoosePrefix(item, unifiedRandom);
@@ -243,7 +241,7 @@ namespace AutoReroll
                 return Prefix.Godly;
             }
 
-			if(item.modItem.mod != null)
+			if(item.modItem != null)
 			{
 				Mod thisItemMod = item.modItem.mod;
 				if(thisItemMod == AutoReroll.Thorium)
