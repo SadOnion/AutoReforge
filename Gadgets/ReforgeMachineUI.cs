@@ -237,8 +237,17 @@ namespace GadgetBox.GadgetUI
                 {
                     continue;
                 }
-
+                
+                
+                
                 tempItem.Prefix(i);
+                if (ModCompat.IsCalamityRougeWeapon(tempItem))
+                {
+                    if( i <= 84)
+                    {
+                        continue;
+                    }
+                }
                 if (isArmor)
                 {
                     ModCompat.ApplyArmorPrefix(tempItem, i);
