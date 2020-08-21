@@ -235,7 +235,10 @@ namespace GadgetBox.GadgetUI
 
                 if (!tempItem.CanApplyPrefix(i))
                 {
-                    continue;
+                    if (!ModCompat.IsCalamityRougeWeapon(tempItem) && !tempItem.consumable)
+                    {
+                        continue;
+                    }
                 }
                 
                 
