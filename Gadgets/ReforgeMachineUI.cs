@@ -246,7 +246,8 @@ namespace GadgetBox.GadgetUI
                 tempItem.Prefix(i);
                 if (ModCompat.IsCalamityRougeWeapon(tempItem))
                 {
-                    if( i <= 84)
+                    var prefix = ModPrefix.GetPrefix(i);
+                    if(prefix == null || prefix.mod != AutoReroll.AutoReroll.Calamity)
                     {
                         continue;
                     }
