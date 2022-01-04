@@ -1,26 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\WavePC\\Documents\\My Games\\Terraria\\ModLoader\\Mod Sources\\AutoReroll\\BestModifierRoll.csproj": {}
+    "C:\\Users\\WavePC\\Documents\\My Games\\Terraria\\ModLoader\\Beta\\Mod Sources\\AutoReroll\\BestModifierRoll.csproj": {}
   },
   "projects": {
-    "C:\\Users\\WavePC\\Documents\\My Games\\Terraria\\ModLoader\\Mod Sources\\AutoReroll\\BestModifierRoll.csproj": {
+    "C:\\Users\\WavePC\\Documents\\My Games\\Terraria\\ModLoader\\Beta\\Mod Sources\\AutoReroll\\BestModifierRoll.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\WavePC\\Documents\\My Games\\Terraria\\ModLoader\\Mod Sources\\AutoReroll\\BestModifierRoll.csproj",
+        "projectUniqueName": "C:\\Users\\WavePC\\Documents\\My Games\\Terraria\\ModLoader\\Beta\\Mod Sources\\AutoReroll\\BestModifierRoll.csproj",
         "projectName": "BestModifierRoll",
-        "projectPath": "C:\\Users\\WavePC\\Documents\\My Games\\Terraria\\ModLoader\\Mod Sources\\AutoReroll\\BestModifierRoll.csproj",
+        "projectPath": "C:\\Users\\WavePC\\Documents\\My Games\\Terraria\\ModLoader\\Beta\\Mod Sources\\AutoReroll\\BestModifierRoll.csproj",
         "packagesPath": "C:\\Users\\WavePC\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\WavePC\\Documents\\My Games\\Terraria\\ModLoader\\Mod Sources\\AutoReroll\\obj\\",
+        "outputPath": "C:\\Users\\WavePC\\Documents\\My Games\\Terraria\\ModLoader\\Beta\\Mod Sources\\AutoReroll\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Microsoft\\Xamarin\\NuGet\\",
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
           "C:\\Users\\WavePC\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net45"
@@ -31,6 +29,7 @@
         },
         "frameworks": {
           "net45": {
+            "targetAlias": "net45",
             "projectReferences": {}
           }
         },
@@ -42,7 +41,8 @@
       },
       "frameworks": {
         "net45": {
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.302\\RuntimeIdentifierGraph.json"
+          "targetAlias": "net45",
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.100\\RuntimeIdentifierGraph.json"
         }
       }
     }

@@ -1,0 +1,26 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "a69a87e3-c09d-414b-9d70-69fd00b77286": {
+      "ProjectGuid": "a69a87e3-c09d-414b-9d70-69fd00b77286",
+      "DisplayName": "AutoReroll",
+      "ColorIndex": 0
+    },
+    "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3": {
+      "ProjectGuid": "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3",
+      "DisplayName": "Różne pliki",
+      "ColorIndex": -1
+    },
+    "ef4021d8-f9c4-47c9-8810-043d41c3cd49": {
+      "ProjectGuid": "ef4021d8-f9c4-47c9-8810-043d41c3cd49",
+      "DisplayName": "BestModifierRoll",
+      "ColorIndex": 1
+    },
+    "8dbc4141-d139-469c-9f7f-4622938054b5": {
+      "ProjectGuid": "8dbc4141-d139-469c-9f7f-4622938054b5",
+      "DisplayName": "AutoReroll",
+      "ColorIndex": 2
+    }
+  },
+  "NextColorIndex": 3
+}

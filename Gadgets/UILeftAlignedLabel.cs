@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Graphics;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.GameContent.UI.Elements;
 using Terraria.ID;
 
@@ -30,7 +31,7 @@ namespace GadgetBox.GadgetUI
 
 		public void SetText(string text, float textScale, bool large)
 		{
-			DynamicSpriteFont spriteFont = large ? Main.fontDeathText : Main.fontMouseText;
+			DynamicSpriteFont spriteFont = large ? FontAssets.DeathText.Value : FontAssets.MouseText.Value;
 			Vector2 textSize = new Vector2(spriteFont.MeasureString(text).X, large ? 32f : 16f) * textScale;
 			Text = text;
 			_textScale = textScale;
