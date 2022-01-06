@@ -25,6 +25,7 @@
       ]
     }
   },
+  "libraries": {},
   "projectFileDependencyGroups": {
     "net6.0": [
       "tModLoader.CodeAssist >= 0.1.*"
