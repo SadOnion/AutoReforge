@@ -1,17 +1,15 @@
-﻿using System.Collections.Generic;
-using AutoReroll;
+﻿using AutoReroll;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
-using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.UI.Elements;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.UI;
-using static Terraria.ModLoader.ModContent;
 namespace GadgetBox.GadgetUI
 {
     internal class ReforgeMachineUI : UIState
@@ -24,7 +22,6 @@ namespace GadgetBox.GadgetUI
         internal UIMoneyPanel moneyPanel;
         private List<int> selectedPrefixes = new List<int>();
         private int reforgePrice;
-        private int reforgeTries;
         private bool autoReforge;
         private double tickCounter;
         private double silenceCounter;
@@ -128,7 +125,6 @@ namespace GadgetBox.GadgetUI
             }
 
             reforgePrice = reforgeSlot.item.ReforgePrice();
-
             if (autoReforge)
             {
 
@@ -140,20 +136,17 @@ namespace GadgetBox.GadgetUI
                 if (selectedPrefixes.Count == 0 || selectedPrefixes.Contains(reforgeSlot.item.prefix) || !CanReforgeItem())
                 {
                     autoReforge = false;
-                    reforgeTries = 0;
                     tickCounter = 0;
                 }
                 else if (tickCounter > 1000 / AutoReroll.AutoReroll.ForgePerSec)
                 {
 
                     tickCounter = 0;
-                    reforgeTries++;
                     ReforgeItem(silenceCounter < .2f ? true : false);
                     if (silenceCounter > .2f) silenceCounter = 0;
-                    if (selectedPrefixes.Contains(reforgeSlot.item.prefix) || reforgeTries > 200)
+                    if (selectedPrefixes.Contains(reforgeSlot.item.prefix))
                     {
                         autoReforge = false;
-                        reforgeTries = 0;
                         tickCounter = 0;
                     }
                 }
@@ -191,7 +184,6 @@ namespace GadgetBox.GadgetUI
             if (autoReforge)
             {
                 autoReforge = false;
-                reforgeTries = 0;
                 tickCounter = 0;
             }
             else if (selectedPrefixes.Count > 0)
@@ -209,17 +201,17 @@ namespace GadgetBox.GadgetUI
 
         private void OnItemChanged()
         {
+            reforgeList.Clear();
+            if (reforgeSlot.item.IsAir)
+            {
+                return;
+            }
             if (lastItem != reforgeSlot.item.type)
             {
                 UpdateAllowedPrefixes();
                 lastItem = reforgeSlot.item.type;
             }
 
-            reforgeList.Clear();
-            if (reforgeSlot.item.IsAir)
-            {
-                return;
-            }
             UpdateReforgeList();
 
         }
@@ -232,7 +224,6 @@ namespace GadgetBox.GadgetUI
 
             UIReforgeLabel reforgeLabel;
             List<int> tempSelected = new List<int>();
-
             foreach (var prefix in allowedPrefixes)
             {
                 Item tempItem = controlItem.Clone();
@@ -252,20 +243,76 @@ namespace GadgetBox.GadgetUI
         private void UpdateAllowedPrefixes()
         {
             allowedPrefixes.Clear();
-            Item controlItem = reforgeSlot.item.Clone();
-            if (!ItemLoader.PreReforge(controlItem))
+            if (!ItemLoader.PreReforge(reforgeSlot.item))
             {
                 return;
             }
-            controlItem.netDefaults(reforgeSlot.item.netID);
-            controlItem = controlItem.CloneWithModdedDataFrom(reforgeSlot.item);
-            for (int j = 0; j < 1001; j++)
+            int attempts = 100;
+            while (attempts > 0)
             {
-                Item tempItem = controlItem.Clone();
+                Item tempItem = new Item();
+                tempItem = reforgeSlot.item.CloneWithModdedDataFrom(reforgeSlot.item);
+                tempItem.netDefaults(reforgeSlot.item.netID);
                 tempItem.Prefix(-2);
-                allowedPrefixes.Add(tempItem.prefix);
+                if (tempItem.prefix > 0 && allowedPrefixes.Add(tempItem.prefix))
+                {
+                    attempts += 100;
+                }
+
+                attempts--;
+            }
+            Item item = new Item();
+            item = reforgeSlot.item.CloneWithModdedDataFrom(reforgeSlot.item);
+            item.netDefaults(reforgeSlot.item.netID);
+            AddAllowedModPrefixes(item, item.prefix);
+        }
+
+        private void AddAllowedModPrefixes(Item item, int num)
+        {
+            if (GadgetMethods.MagicPrefix(item))
+            {
+                var prefixes = GadgetMethods.GetValidModedPrefixes(item, PrefixCategory.Magic);
+                AddPrefixes(prefixes);
+            }
+            if (GadgetMethods.WeaponPrefix(item))
+            {
+                var prefixes = GadgetMethods.GetValidModedPrefixes(item, PrefixCategory.AnyWeapon);
+                AddPrefixes(prefixes);
+            }
+            if (GadgetMethods.RangedPrefix(item))
+            {
+                var prefixes = GadgetMethods.GetValidModedPrefixes(item, PrefixCategory.Ranged);
+                AddPrefixes(prefixes);
+            }
+            if (GadgetMethods.MagicPrefix(item))
+            {
+                var prefixes = GadgetMethods.GetValidModedPrefixes(item, PrefixCategory.Magic);
+                AddPrefixes(prefixes);
+            }
+            if (GadgetMethods.MeleePrefix(item))
+            {
+                var prefixes = GadgetMethods.GetValidModedPrefixes(item, PrefixCategory.Melee);
+                AddPrefixes(prefixes);
+            }
+            if (GadgetMethods.IsAPrefixableAccessory(item))
+            {
+                var prefixes = GadgetMethods.GetValidModedPrefixes(item, PrefixCategory.Accessory);
+                AddPrefixes(prefixes);
+            }
+            if (GadgetMethods.GeneralPrefix(item))
+            {
+                var prefixes = GadgetMethods.GetValidModedPrefixes(item, PrefixCategory.Custom);
+                AddPrefixes(prefixes);
             }
         }
+        private void AddPrefixes(IEnumerable<int> prefixes)
+        {
+            foreach (var prefix in prefixes)
+            {
+                allowedPrefixes.Add(prefix);
+            }
+        }
+
         private void ChoseReforge(UIMouseEvent evt, UIElement listeningElement)
         {
             UIReforgeLabel element = ((UIReforgeLabel)listeningElement);
@@ -282,7 +329,6 @@ namespace GadgetBox.GadgetUI
         {
             Main.LocalPlayer.BuyItem(reforgePrice, -1);
             GadgetMethods.PrefixItem(ref reforgeSlot.item, silent);
-            OnItemChanged();
         }
     }
 }

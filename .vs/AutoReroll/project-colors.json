@@ -20,7 +20,22 @@
       "ProjectGuid": "8dbc4141-d139-469c-9f7f-4622938054b5",
       "DisplayName": "AutoReroll",
       "ColorIndex": 2
+    },
+    "43504cd3-0ca6-4424-8dc5-aec0261e7775": {
+      "ProjectGuid": "43504cd3-0ca6-4424-8dc5-aec0261e7775",
+      "DisplayName": "AutoReroll",
+      "ColorIndex": 3
+    },
+    "92a9a2dd-3af0-4643-af95-7cfac3f6f005": {
+      "ProjectGuid": "92a9a2dd-3af0-4643-af95-7cfac3f6f005",
+      "DisplayName": "AutoReroll",
+      "ColorIndex": 4
+    },
+    "cfc5038b-7e53-441a-9d7f-a76bf2f5d7c6": {
+      "ProjectGuid": "cfc5038b-7e53-441a-9d7f-a76bf2f5d7c6",
+      "DisplayName": "AutoReroll",
+      "ColorIndex": 5
     }
   },
-  "NextColorIndex": 3
+  "NextColorIndex": 6
 }

@@ -11,6 +11,7 @@ using Terraria.GameContent.UI.Elements;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.UI;
+using Terraria.Utilities;
 
 namespace AutoReroll
 {
@@ -18,7 +19,7 @@ namespace AutoReroll
     {
         public const string modName = "Auto Reforge";
         public static AutoReroll Instance;
-
+        public static UnifiedRandom Rng = new UnifiedRandom(Environment.TickCount);
         public static int ForgePerSec = 10;
         public static bool UseDefaultReforgeMenu = false;
         public bool isInReforgeMenu;

@@ -1,4 +1,4 @@
 displayName = Auto Reforge
 author = Sad Onion
-version = 2.0
+version = 2.1
 homepage = https://forums.terraria.org/index.php?threads/autoreroll.85057/
