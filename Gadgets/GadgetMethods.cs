@@ -77,7 +77,7 @@ namespace GadgetBox
 
         internal static bool MeleePrefix(Item item)
         {
-            if (item.ModItem != null && GeneralPrefix(item) && item.DamageType == DamageClass.Melee)
+            if (GeneralPrefix(item) && item.DamageType == DamageClass.Melee)
             {
                 return !item.noUseGraphic;
             }
@@ -87,7 +87,7 @@ namespace GadgetBox
 
         internal static bool WeaponPrefix(Item item)
         {
-            if (item.ModItem != null && GeneralPrefix(item) && item.DamageType == DamageClass.Melee)
+            if (GeneralPrefix(item) && item.DamageType == DamageClass.Melee)
             {
                 return item.noUseGraphic;
             }
@@ -97,7 +97,7 @@ namespace GadgetBox
 
         internal static bool RangedPrefix(Item item)
         {
-            if (item.ModItem != null && GeneralPrefix(item))
+            if (GeneralPrefix(item))
             {
                 return item.DamageType == DamageClass.Ranged;
             }
@@ -107,7 +107,7 @@ namespace GadgetBox
 
         internal static bool MagicPrefix(Item item)
         {
-            if (item.ModItem != null && GeneralPrefix(item))
+            if (GeneralPrefix(item))
             {
                 if (!(item.DamageType == DamageClass.Magic))
                 {

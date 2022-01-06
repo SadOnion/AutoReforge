@@ -247,20 +247,20 @@ namespace GadgetBox.GadgetUI
             {
                 return;
             }
-            int attempts = 100;
-            while (attempts > 0)
+            int attempts = 75 * PrefixLoader.PrefixCount;
+            for (int i = 0; i < attempts; i++)
             {
                 Item tempItem = new Item();
                 tempItem = reforgeSlot.item.CloneWithModdedDataFrom(reforgeSlot.item);
                 tempItem.netDefaults(reforgeSlot.item.netID);
                 tempItem.Prefix(-2);
-                if (tempItem.prefix > 0 && allowedPrefixes.Add(tempItem.prefix))
+                if (tempItem.prefix > 0)
                 {
-                    attempts += 100;
+                    allowedPrefixes.Add(tempItem.prefix);
                 }
 
-                attempts--;
             }
+            Main.NewText($"Vanilla {allowedPrefixes.Count}");
             Item item = new Item();
             item = reforgeSlot.item.CloneWithModdedDataFrom(reforgeSlot.item);
             item.netDefaults(reforgeSlot.item.netID);
@@ -274,11 +274,10 @@ namespace GadgetBox.GadgetUI
                 var prefixes = GadgetMethods.GetValidModedPrefixes(item, PrefixCategory.Magic);
                 AddPrefixes(prefixes);
             }
-            if (GadgetMethods.WeaponPrefix(item))
-            {
-                var prefixes = GadgetMethods.GetValidModedPrefixes(item, PrefixCategory.AnyWeapon);
-                AddPrefixes(prefixes);
-            }
+
+            var anyPrefixes = GadgetMethods.GetValidModedPrefixes(item, PrefixCategory.AnyWeapon);
+            AddPrefixes(anyPrefixes);
+
             if (GadgetMethods.RangedPrefix(item))
             {
                 var prefixes = GadgetMethods.GetValidModedPrefixes(item, PrefixCategory.Ranged);
