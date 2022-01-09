@@ -35,7 +35,12 @@
       "ProjectGuid": "cfc5038b-7e53-441a-9d7f-a76bf2f5d7c6",
       "DisplayName": "AutoReroll",
       "ColorIndex": 5
+    },
+    "30028a0a-9d3b-4298-88ac-1d464b1922cc": {
+      "ProjectGuid": "30028a0a-9d3b-4298-88ac-1d464b1922cc",
+      "DisplayName": "AutoReroll",
+      "ColorIndex": 6
     }
   },
-  "NextColorIndex": 6
+  "NextColorIndex": 7
 }
