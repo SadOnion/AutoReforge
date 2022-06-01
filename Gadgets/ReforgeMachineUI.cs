@@ -92,7 +92,8 @@ namespace GadgetBox.GadgetUI
 		{
 			if (!reforgeSlot.item.IsAir)
 			{
-				Main.LocalPlayer.QuickSpawnClonedItem(reforgeSlot.item, reforgeSlot.item.stack);
+				var source = reforgeSlot.item.GetSource_OpenItem(reforgeSlot.item.type);
+				Main.LocalPlayer.QuickSpawnClonedItem(source, reforgeSlot.item, reforgeSlot.item.stack);
 				reforgeSlot.item.TurnToAir();
 			}
 
@@ -213,8 +214,8 @@ namespace GadgetBox.GadgetUI
 			}
 
 			UpdateReforgeList();
-
 		}
+
 		private void UpdateReforgeList()
 		{
 			Item controlItem = reforgeSlot.item.Clone();

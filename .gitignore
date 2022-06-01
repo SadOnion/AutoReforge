@@ -1,6 +1,7 @@
 bin/
 obj/
 *.user
+.vs/
 App.config
 .vs/AutoReroll/v15/Server/sqlite3/storage.ide-wal
 .vs/AutoReroll/v15/Server/sqlite3/storage.ide-shm
