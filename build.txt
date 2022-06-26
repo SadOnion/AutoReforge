@@ -1,4 +1,4 @@
 displayName = Auto Reforge
 author = Sad Onion
-version = 2022.06.24
+version = 2022.06.26
 homepage = https://forums.terraria.org/index.php?threads/autoreroll.85057/
