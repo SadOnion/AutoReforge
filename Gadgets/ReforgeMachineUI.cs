@@ -10,6 +10,9 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.UI;
+using System.Linq;
+using System;
+
 namespace GadgetBox.GadgetUI
 {
 	internal class ReforgeMachineUI : UIState
@@ -27,6 +30,8 @@ namespace GadgetBox.GadgetUI
 		private double silenceCounter;
 		private int lastItem = ItemID.None;
 		private HashSet<int> allowedPrefixes = new HashSet<int>();
+		private readonly int PrefixCountX2 = PrefixLoader.PrefixCount * 2;
+		private readonly Item air = new Item();
 		public override void OnInitialize()
 		{
 			Main.recBigList = false;
@@ -92,7 +97,8 @@ namespace GadgetBox.GadgetUI
 		{
 			if (!reforgeSlot.item.IsAir)
 			{
-				Main.LocalPlayer.QuickSpawnClonedItem(reforgeSlot.item, reforgeSlot.item.stack);
+				var source = reforgeSlot.item.GetSource_OpenItem(reforgeSlot.item.type);
+				Main.LocalPlayer.QuickSpawnClonedItem(source, reforgeSlot.item, reforgeSlot.item.stack);
 				reforgeSlot.item.TurnToAir();
 			}
 
@@ -213,8 +219,8 @@ namespace GadgetBox.GadgetUI
 			}
 
 			UpdateReforgeList();
-
 		}
+
 		private void UpdateReforgeList()
 		{
 			Item controlItem = reforgeSlot.item.Clone();
@@ -247,68 +253,53 @@ namespace GadgetBox.GadgetUI
 			{
 				return;
 			}
+			if (IsAnyModDumbAndDoesntUseLoaderHooksCorrectlyLikeCalamity(reforgeSlot.item))
+			{
+				allowedPrefixes = GetPrefixesIfAnyModIsDumbAndDontUsesModLoaderHooksCorrectlyLikeCalamity();
+				return;
+			}
 			int attempts = PrefixLoader.PrefixCount;
+			Item tempItem = reforgeSlot.item.CloneWithModdedDataFrom(reforgeSlot.item);
+			tempItem.netDefaults(reforgeSlot.item.netID);
 			while (attempts > 0)
 			{
-				Item tempItem = new Item();
-				tempItem = reforgeSlot.item.CloneWithModdedDataFrom(reforgeSlot.item);
-				tempItem.netDefaults(reforgeSlot.item.netID);
 				tempItem.Prefix(-2);
 				if (tempItem.prefix > 0 && allowedPrefixes.Add(tempItem.prefix))
 				{
 					attempts += PrefixLoader.PrefixCount;
+					attempts = Math.Clamp(attempts, 0, PrefixCountX2);
 				}
 				attempts--;
 			}
-			Item item = new Item();
-			item = reforgeSlot.item.CloneWithModdedDataFrom(reforgeSlot.item);
-			item.netDefaults(reforgeSlot.item.netID);
-			AddAllowedModPrefixes(item, item.prefix);
 		}
-
-		private void AddAllowedModPrefixes(Item item, int num)
+		private bool IsAnyModDumbAndDoesntUseLoaderHooksCorrectlyLikeCalamity(Item item)
 		{
-			if (GadgetMethods.MagicPrefix(item))
-			{
-				var prefixes = GadgetMethods.GetValidModedPrefixes(item, PrefixCategory.Magic);
-				AddPrefixes(prefixes);
-			}
-
-			var anyPrefixes = GadgetMethods.GetValidModedPrefixes(item, PrefixCategory.AnyWeapon);
-			AddPrefixes(anyPrefixes);
-
-			if (GadgetMethods.RangedPrefix(item))
-			{
-				var prefixes = GadgetMethods.GetValidModedPrefixes(item, PrefixCategory.Ranged);
-				AddPrefixes(prefixes);
-			}
-			if (GadgetMethods.MagicPrefix(item))
-			{
-				var prefixes = GadgetMethods.GetValidModedPrefixes(item, PrefixCategory.Magic);
-				AddPrefixes(prefixes);
-			}
-			if (GadgetMethods.MeleePrefix(item))
-			{
-				var prefixes = GadgetMethods.GetValidModedPrefixes(item, PrefixCategory.Melee);
-				AddPrefixes(prefixes);
-			}
-			if (GadgetMethods.IsAPrefixableAccessory(item))
-			{
-				var prefixes = GadgetMethods.GetValidModedPrefixes(item, PrefixCategory.Accessory);
-				AddPrefixes(prefixes);
-			}
-			if (GadgetMethods.GeneralPrefix(item))
-			{
-				var prefixes = GadgetMethods.GetValidModedPrefixes(item, PrefixCategory.Custom);
-				AddPrefixes(prefixes);
-			}
+			Item tempItem = item.Clone();
+			int prefixBeforePostReforge = tempItem.prefix;
+			Main.reforgeItem = tempItem;
+			ItemLoader.PostReforge(tempItem);
+			Main.reforgeItem = new Item();
+			return tempItem.prefix != prefixBeforePostReforge;
 		}
-		private void AddPrefixes(IEnumerable<int> prefixes)
+		private HashSet<int> GetPrefixesIfAnyModIsDumbAndDontUsesModLoaderHooksCorrectlyLikeCalamity()
 		{
-			foreach (var prefix in prefixes)
+			HashSet<int> prefixes = new HashSet<int>();
+			int attempts = PrefixLoader.PrefixCount;
+			Item tempItem = reforgeSlot.item.Clone();
+			tempItem.netDefaults(reforgeSlot.item.netID);
+			Main.reforgeItem = tempItem;
+			while (attempts > 0)
 			{
-				allowedPrefixes.Add(prefix);
+				ItemLoader.PostReforge(tempItem);
+				if (tempItem.prefix > 0 && prefixes.Add(tempItem.prefix))
+				{
+					attempts += PrefixLoader.PrefixCount;
+					attempts = Math.Clamp(attempts, 0, PrefixCountX2);
+				}
+				attempts--;
 			}
+			Main.reforgeItem = air;
+			return prefixes;
 		}
 
 		private void ChoseReforge(UIMouseEvent evt, UIElement listeningElement)
