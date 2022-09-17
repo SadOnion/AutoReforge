@@ -1,4 +1,4 @@
-﻿using AutoReroll;
+using AutoReroll;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
@@ -253,7 +253,7 @@ namespace GadgetBox.GadgetUI
 			{
 				return;
 			}
-			if (IsAnyModDumbAndDoesntUseLoaderHooksCorrectlyLikeCalamity(reforgeSlot.item))
+			if (!(ModLoader.TryGetMod("SummonersShine", out Mod _) && reforgeSlot.item.CountsAsClass(DamageClass.Summon)) && IsAnyModDumbAndDoesntUseLoaderHooksCorrectlyLikeCalamity(reforgeSlot.item))
 			{
 				allowedPrefixes = GetPrefixesIfAnyModIsDumbAndDontUsesModLoaderHooksCorrectlyLikeCalamity();
 				return;
