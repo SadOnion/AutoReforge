@@ -28,7 +28,7 @@ namespace GadgetBox.GadgetUI
             Height.Set(_texture.Height, 0f);
         }
 
-        public override void MouseDown(UIMouseEvent evt)
+        public override void LeftMouseDown(UIMouseEvent evt)
         {
             if (!Visible)
             {
@@ -38,11 +38,11 @@ namespace GadgetBox.GadgetUI
             _isClicking = true;
             if (CanClick?.Invoke() ?? true)
             {
-                base.MouseDown(evt);
+                base.LeftMouseDown(evt);
             }
         }
 
-        public override void MouseUp(UIMouseEvent evt)
+        public override void LeftMouseUp(UIMouseEvent evt)
         {
             if (!Visible)
             {
@@ -54,7 +54,7 @@ namespace GadgetBox.GadgetUI
                 _isClicking = false;
             }
 
-            base.MouseUp(evt);
+            base.LeftMouseUp(evt);
         }
 
         public override void MouseOut(UIMouseEvent evt)

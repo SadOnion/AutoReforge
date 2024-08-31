@@ -27,7 +27,7 @@ namespace GadgetBox.GadgetUI
 			Height.Set(backgroundTexture.Height * scale, 0f);
 		}
 
-		public override void MouseDown(UIMouseEvent evt)
+		public override void LeftMouseDown(UIMouseEvent evt)
 		{
 			Player player = Main.LocalPlayer;
 
@@ -71,7 +71,7 @@ namespace GadgetBox.GadgetUI
 						Recipe.FindRecipes();
 						SoundEngine.PlaySound(SoundID.Grab);
 					}
-					base.MouseDown(evt);
+					base.LeftMouseDown(evt);
 				}
 			}
 		}

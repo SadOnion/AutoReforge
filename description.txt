@@ -1,5 +1,1 @@
 Auto Reforge is a  mod that replaces normal reforge menu with more complex one that allows you to reforge automaticly.
-
-Specific info on homepage
-
-Report bugs and compatibility issues in direct message on discord you can find me on tModLoader server nickname:SadOnion
