@@ -1,3 +1,8 @@
+UI: {
+	LeaveMe: Leave me
+	UseMouse: Use mouse wheel to change value
+}
+
 Configs: {
 	Config: {
 		DisplayName: Config

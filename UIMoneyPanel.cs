@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using Terraria;
+using Terraria.Localization;
 using Terraria.GameContent;
 using Terraria.GameContent.UI.Elements;
 using Terraria.ID;
@@ -14,7 +15,7 @@ namespace AutoReroll
 	{
 		public bool Visible { get; internal set; }
 		Color textColor = Color.White;
-		string text = "Leave me";
+		string text = Language.GetTextValue("Mods.AutoReroll.UI.LeaveMe");
 		public UICounterButton[] CounterButtons { get; private set; } = new UICounterButton[4];
 		protected override void DrawSelf(SpriteBatch spriteBatch)
 		{
@@ -88,7 +89,7 @@ namespace AutoReroll
 		{
 			if (IsMouseHovering)
 			{
-				Main.hoverItemName = "Use mouse wheel to change value";
+				Main.hoverItemName = Language.GetTextValue("Mods.AutoReroll.UI.UseMouse");
 			}
 			base.DrawSelf(spriteBatch);
 		}
